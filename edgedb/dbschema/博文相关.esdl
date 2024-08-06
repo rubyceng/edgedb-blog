@@ -8,7 +8,7 @@ module default{
   type Post extending Base{
     required title: str;
     required body: str;
-    multi author:= .<posts[is Author];
+    multi author: User;
     state: State{
       default := State.Complie
     };
@@ -25,7 +25,7 @@ module default{
     #策略；
     access policy has_hidden
     allow select
-    using ( (.state != State.NULL)??false or (global current_user_id in .author.id)??false);
+    using ( (.state ?= State.Full) or (global current_user_id in .author.id)??false);
     access policy has_update
     allow update
     using ( (global current_user_id in .author.id)??false);

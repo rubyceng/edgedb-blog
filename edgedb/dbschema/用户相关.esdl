@@ -12,13 +12,11 @@ module default{
         errmessage := "你已经关注过该博主了"
       }
     };
-    multi posts: Post{
-      on target delete allow;
-    }
+    multi posts:= .<author[is Post];
     multi comments: Comment;
   }
   # 用户基类
-  type User extending Base{
+  abstract type User extending Base{
     required username: str{
       constraint max_length(20);
     }
