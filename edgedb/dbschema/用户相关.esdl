@@ -26,12 +26,8 @@ module default{
     required email: str{
       constraint exclusive
     };
-    avatar:str{
-      annotation title := "头像"
-    };
-    ip:str{
-      annotation description := "用户当前IP信息"
-    }
+    
+    single user_info: UserInfo
   }
     #触发器；
     # trigger add_follow after insert for .follow do (
@@ -39,5 +35,26 @@ module default{
     # )
   type Admin extending User{
     required enable: bool; 
+  }
+  type UserInfo extending Base{
+    avatar:str{
+      annotation title := "头像"
+    };
+    ip:str{
+      annotation description := "用户当前IP信息"
+    };
+    # user:= .<user_info[is User];
+    user: User;
+    # Deny策略的优先权高于allow
+    # access policy deny_all
+    # deny all 
+    # using ( true );
+    # access policy self_select
+    # allow select
+    # using(global current_user_id ?= (.user.id));
+    # access policy insert_all
+    # allow insert 
+    # using(true);
+    
   }
 }

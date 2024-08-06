@@ -2,7 +2,8 @@
 /dist
 /node_modules
 /build
-
+/edgedb/bak
+/edgedb/dbschema/migrations
 # Logs
 logs
 *.log
