@@ -1,21 +1,47 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ES2022",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ES2020",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": false,
+    "moduleResolution": "node",
+    "pretty": true,
+    "strict": true,
+    "downlevelIteration": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": [
+      "node",
+      "mime"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "paths": {
+      "@apps/*": [
+        "./apps/*"
+      ],
+      "@shared/*": [
+        "/shared/*"
+      ]
+    }
+    // "typeRoots": ["./node_modules/@types", "./path-to-custom-declarations"]
+  },
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "/webpack.config.js"
+  ]
 }
