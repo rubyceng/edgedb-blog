@@ -4,11 +4,13 @@
   abstract type Base{
     create_user: User{
       default := (select User filter (.id = global current_user_id));
+      on target delete allow;
     }
     create_time: datetime{
       default := datetime_of_statement()
     }
     modified_user: User{
+      on target delete allow;
       rewrite insert,update using(
         .modified_user??(select User filter (global current_user_id = .id))
       )

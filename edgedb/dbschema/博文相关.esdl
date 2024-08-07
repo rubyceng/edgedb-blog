@@ -20,12 +20,12 @@ module default{
       )
     }
     multi tags: Tag;
-    multi comment: Comment;
+    multi comment:= .<recover[is Comment];
     post_type := .<posts[is PostType];
     #策略；
-    access policy has_hidden
+    access policy allow_all
     allow select
-    using ( (.state ?= State.Full) or (global current_user_id in .author.id)??false);
+    using ( true);
     access policy has_update
     allow update
     using ( (global current_user_id in .author.id)??false);
@@ -38,9 +38,13 @@ module default{
   }
   # 评论
   type Comment extending Base{
-    author := .<comments[is Author];
+    single author :Author;
     required text: str;
-    recover: Comment;
+    multi recover: Comment | Post;
+    access policy allow_all
+    allow all
+    using (true);
+
     access policy has_delete
     allow delete
     using ( (global current_user_id in .author.id)??false or (global current_user_id in (select Admin.id))??false){
@@ -57,6 +61,8 @@ module default{
       constraint exclusive;
     };
     child_type: PostType;
-    multi posts: Post;
+    multi posts: Post{
+      constraint exclusive
+    };
   }
 }

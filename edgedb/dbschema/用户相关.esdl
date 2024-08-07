@@ -13,7 +13,7 @@ module default{
       }
     };
     multi posts:= .<author[is Post];
-    multi comments: Comment;
+    multi comments:= .<author[is Comment];
   }
   # 用户基类
   abstract type User extending Base{
@@ -26,8 +26,7 @@ module default{
     required email: str{
       constraint exclusive
     };
-    
-    single user_info: UserInfo
+    user_info:= .<user[is UserInfo]
   }
     #触发器；
     # trigger add_follow after insert for .follow do (
@@ -44,7 +43,7 @@ module default{
       annotation description := "用户当前IP信息"
     };
     # user:= .<user_info[is User];
-    user: User;
+    single user: User;
     # Deny策略的优先权高于allow
     # access policy deny_all
     # deny all 
