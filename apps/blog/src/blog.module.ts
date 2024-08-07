@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { BlogController } from './blog.controller';
 import { BlogService } from './blog.service';
-
+import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
+import ConfigOptions from 'shared/config/config.nest';
 @Module({
-  imports: [],
-  controllers: [BlogController],
+  imports: [ConfigModule.forRoot(ConfigOptions), UserModule],
   providers: [BlogService],
 })
-export class BlogModule {}
+export class BlogModule { }
